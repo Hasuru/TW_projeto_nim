@@ -1,3 +1,14 @@
 body {
     background-color: #9fa9bf;
+    color: #333c4a;
+}
+
+.elements {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.padElem {
+    padding-left: 150px;
 }
