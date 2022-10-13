@@ -3,6 +3,25 @@ body {
     color: #333c4a;
 }
 
+img {
+    max-width: 50%;
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+p {
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.title {
+    display: block;
+    font-size: 60px;
+    align-self: center;
+}
+
 .elements {
     display: flex;
     justify-content: center;
@@ -10,5 +29,5 @@ body {
 }
 
 .padElem {
-    padding-left: 150px;
+    padding-left: 100%;
 }
