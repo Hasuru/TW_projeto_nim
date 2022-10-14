@@ -8,40 +8,47 @@
         <title>Nim Game</title>
     </head>
     <body>
-<<<<<<< HEAD
-        <img src="images/HRLogo.png" class="title" alt="NIM GAME"></img>
-        <div class="elements">
-            <div>
-                <h2 class="subtitle">Game Mode</h2>
+        <!--Barra de navegação do login-->
+        <div id="logNav" class="logNav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <span class="label">Username: </span><input type="text" name="username"/><br />
+            <span class="label">Password: </span><input type="password" name="password"/><br />
+        </div>
+
+        <div class="log_header">
+            <img src="images/HRLogo.png" alt="NIM GAME"></img>
+            <h3 onclick="openNav()">Log in</h3>
+        </div>
+
+        <div class="main"></div>
+            <h1 class="title">NIM: The Game</h1>
+
+            <table class="container">
+                <tr>
+                    <td class="selection_box">
+                        <h3> Game Mode </h3>
+                        <input type="radio" name="gamemode" value="singleplayer" /> Singleplayer <br />
+                        <input type="radio" name="gamemode" value="multiplayer" /> Multiplayer <br />
+                    </td>
+                    <td class="selection_box">
+                        <h3> Dificulty </h3>
+                        <input type="radio" name="dificulty" value="easy" /> Easy <br />
+                        <input type="radio" name="dificulty" value="normal" /> Normal <br />
+                        <input type="radio" name="dificulty" value="hard" /> Hard <br />
+                        <input type="radio" name="dificulty" value="impossible" /> Impossible <br />
+                        <br>
+                    </td>
+                    <td class="selection_box">
+                        <h3> Login </h3>
+                        <span class="label">Username: </span><input type="text" name="username"/><br />
+                        <span class="label">Password: </span><input type="password" name="password"/><br />
+                    </td>
+                </tr>
+            </table>
+
+            <div class="game_region">
+
             </div>
         </div>
-=======
-        <h1 align="center">NIM: The Game</h1>
-
-        <table border="2" align="center">
-            <tr>
-                <td bgcolor="grey">
-                    <h3 align="center"> Game Mode </h3>
-                    <input type="radio" name="gamemode" value="singleplayer" /> Singleplayer <br />
-                    <input type="radio" name="gamemode" value="multiplayer" /> Multiplayer <br />
-                </td>
-                <td bgcolor="grey">
-                    <h3 align="center"> Dificulty </h3>
-                    <input type="radio" name="dificulty" value="easy" /> Easy <br />
-                    <input type="radio" name="dificulty" value="normal" /> Normal <br />
-                    <input type="radio" name="dificulty" value="hard" /> Hard <br />
-                    <input type="radio" name="dificulty" value="impossible" /> Impossible <br />
-                </td>
-                <td bgcolor="grey">
-                    <h3 align="center"> Login </h3>
-                    Username:<input type="text" name="username" align="right"/><br />
-                    Password: <input type="password" name="password" align="right"/><br />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3">NIM Game<br /></td>
-            </tr>
-        </table>
->>>>>>> 61e4fc7fc65dee7e2e6a72d1aeee07103773024a
     </body>
 </html>
