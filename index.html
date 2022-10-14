@@ -11,43 +11,46 @@
         <!--Barra de navegação do login-->
         <div id="logNav" class="logNav">
             <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <span class="label">Username: </span><input type="text" name="username"/><br />
-            <span class="label">Password: </span><input type="password" name="password"/><br />
+            <span class="label">Username <br><input type="text" placeholder="Enter Username" name="username"/></span><br />
+            <span class="label">Password <br><input type="password" placeholder="Enter Password" name="password"/></span><br />
         </div>
 
         <div class="log_header">
-            <img src="images/HRLogo.png" alt="NIM GAME"></img>
+            <img src="images/logo.png" alt="NIM GAME"></img>
             <h3 onclick="openNav()">Log in</h3>
         </div>
 
-        <div class="main"></div>
-            <h1 class="title">NIM: The Game</h1>
+        <div class="main">
+            <div class="mode_container">
+                <div class="mode_box">
+                    <h2>MODE</h2>
+                    <hr>
+                    <div class="modes">
+                        <input type="radio" id="single_player" name="mode">
+                        <label for="single_player">SinglePlayer</label><br>
+                        <input type="radio" id="multi_player" name="mode">
+                        <label for="multi_player">MultiPlayer</label>
+                    </div>
+                </div>
+                <div class="mode_box">
+                    <h2>DIFFICULTY</h2>
+                    <hr>
+                    <div class="modes">
+                        <input type="radio" id="easy_diff" name="diff">
+                        <label for="easy_diff">Easy</label><br>
+                        <input type="radio" id="medium_diff" name="diff">
+                        <label for="medium_diff">Medium</label><br>
+                        <input type="radio" id="hard_diff" name="diff">
+                        <label for="hard_diff">Hard</label><br>
+                        <input type="radio" id="ex_diff" name="diff">
+                        <label for="ex_diff">Xtreme</label>
+                    </div>
+                </div>
+            </div>
 
-            <table class="container">
-                <tr>
-                    <td class="selection_box">
-                        <h3> Game Mode </h3>
-                        <input type="radio" name="gamemode" value="singleplayer" /> Singleplayer <br />
-                        <input type="radio" name="gamemode" value="multiplayer" /> Multiplayer <br />
-                    </td>
-                    <td class="selection_box">
-                        <h3> Dificulty </h3>
-                        <input type="radio" name="dificulty" value="easy" /> Easy <br />
-                        <input type="radio" name="dificulty" value="normal" /> Normal <br />
-                        <input type="radio" name="dificulty" value="hard" /> Hard <br />
-                        <input type="radio" name="dificulty" value="impossible" /> Impossible <br />
-                        <br>
-                    </td>
-                    <td class="selection_box">
-                        <h3> Login </h3>
-                        <span class="label">Username: </span><input type="text" name="username"/><br />
-                        <span class="label">Password: </span><input type="password" name="password"/><br />
-                    </td>
-                </tr>
-            </table>
-
-            <div class="game_region">
-
+            <div class="lb_container">
+                <h2>LeaderBoards</h2>
+                <hr>
             </div>
         </div>
     </body>
