@@ -1,7 +1,9 @@
-Cores usadas para o projeto (HEX):
-    - #9fa9bf (cinzento semi-claro)
-    - #333c4a (cinzento escuro)
-    - #e5caca (bordo claro)
-    - #838087 (cinzento bordo)
-    - #4DFED1 (prismarino)
-    - #E9FFFF (branco azulado)
+### ***Cores usadas para o projeto (HEX):
+    - Cinzento Semi-claro `#9fa9bf`
+    - Cinzento Escuro `#333c4a`
+    - Beige Claro `#e5caca`
+    - Cinzento Beige `#838087` 
+    - Prismarino `#4DFED1`
+    - Branco Azulado `#E9FFFF`***
+
+![Cores](images/palete_cores.PNG)
