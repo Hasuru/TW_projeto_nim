@@ -1,9 +1,9 @@
-function openNav() {
-    document.getElementById("logNav").style.width = "100%";
-    document.getElementById("main").style.marginLeft = "0px";
+function openLog() {
+    document.getElementById("logNav").style.visibility = "visible";
+    document.getElementById("main").style.opacity = "0.9";
 }
 
-function closeNav() {
-    document.getElementById("logNav").style.width = "0px";
-    document.getElementById("main").style.marginLeft = "0px";
+function closeLog() {
+    document.getElementById("logNav").style.visibility = "hidden"
+    document.getElementById("main").style.opacity = "1.0";
 }

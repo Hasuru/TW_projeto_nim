@@ -5,52 +5,71 @@
         <meta name="viewport" content="width:device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles.css">
         <script src="script.js"></script>
-        <title>Nim Game</title>
+        <title>N I M</title>
     </head>
     <body>
-        <!--Barra de navegação do login-->
-        <div id="logNav" class="logNav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <span class="label">Username <br><input type="text" placeholder="Enter Username" name="username"/></span><br />
-            <span class="label">Password <br><input type="password" placeholder="Enter Password" name="password"/></span><br />
+        <div class="header">
+            <h1>N I M</h1>
+            <h3 onclick="openLog()">Log in</h3>
         </div>
 
-        <div class="log_header">
-            <img src="images/logo.png" alt="NIM GAME"></img>
-            <h3 onclick="openNav()">Log in</h3>
-        </div>
-
-        <div class="main">
-            <div class="mode_container">
-                <div class="mode_box">
-                    <h2>MODE</h2>
+        <div id="main" class="main">
+            <div class="container">
+                <!-- Settings Tab -->
+                <div class="settings">
+                    <h2>Settings</h2>
                     <hr>
-                    <div class="modes">
-                        <input type="radio" id="single_player" name="mode">
-                        <label for="single_player">SinglePlayer</label><br>
-                        <input type="radio" id="multi_player" name="mode">
-                        <label for="multi_player">MultiPlayer</label>
+                    <div>
+                        <h2>Board Size</h2>
+                        <form>
+                            <label for="board_width" class="small_size"><u>Board Width</u></label><br>
+                            <input type="number" id="board_width" name="board_width" value="5">
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                    <hr>
+                    <div>
+                        <h2>Game Mode</h2>
+                        <form>
+                            <label for="single_player" class="small_size">SinglePlayer</label>
+                            <input type="radio" id="single_player" name="choose_mode"><br>
+                            <label for="multi_player" class="small_size">MultiPlayer</label>
+                            <input type="radio" id="multi_player" name="choose_mode"><br>
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                    <hr>
+                    <div>
+                        <h2>Difficulty</h2>
+                        <form>
+                            <label for="easy_diff" class="small_size">Easy</label>
+                            <input type="radio" id="easy_diff" name="choose_diff"><br>
+                            <label for="medium_diff" class="small_size">Medium</label>
+                            <input type="radio" id="medium_diff" name="choose_diff"><br>
+                            <label for="hard_diff" class="small_size">Hard</label>
+                            <input type="radio" id="hard_diff" name="choose_diff"><br>
+                            <label for="extreme_diff" class="small_size">Extreme</label>
+                            <input type="radio" id="extreme_diff" name="choose_diff"><br>
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                    <hr>
+                    <h2><u>Rules/About</u></h2>
+                    <hr>
+                </div>
+
+                <div class="game">
+                    <h2>Game Board</h2>
+                    <hr>
+                </div>
+
+                <div class="leaderboard">
+                    <h2>Leaderboards</h2>
+                    <hr>
+                    <div class="result_table">
+                        <p>still nothing here</p>
                     </div>
                 </div>
-                <div class="mode_box">
-                    <h2>DIFFICULTY</h2>
-                    <hr>
-                    <div class="modes">
-                        <input type="radio" id="easy_diff" name="diff">
-                        <label for="easy_diff">Easy</label><br>
-                        <input type="radio" id="medium_diff" name="diff">
-                        <label for="medium_diff">Medium</label><br>
-                        <input type="radio" id="hard_diff" name="diff">
-                        <label for="hard_diff">Hard</label><br>
-                        <input type="radio" id="ex_diff" name="diff">
-                        <label for="ex_diff">Xtreme</label>
-                    </div>
-                </div>
-            </div>
-
-            <div class="lb_container">
-                <h2>LeaderBoards</h2>
-                <hr>
             </div>
         </div>
     </body>
