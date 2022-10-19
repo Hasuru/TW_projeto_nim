@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width:device-width, initial-scale=1.0">
@@ -20,10 +20,10 @@
                     <span class="closex" onclick="closeLog()" title="close Login">&times;</span><br>
 
                     <label for="username"><b>Username</b></label><br>
-                    <input type="text" placeholder="Enter Username" name="username" required><br>
+                    <input type="text" id="username" placeholder="Enter Username" name="username" required><br>
 
                     <label for="password"><b>Password</b></label><br>
-                    <input type="password" placeholder="Enter Password" name="password" required><br>
+                    <input type="password" id="password" placeholder="Enter Password" name="password" required><br>
 
                     <button type="submit">Login</button><br>
                     <label>
@@ -87,12 +87,12 @@
                                     <li>In each turn, the player must remove 1 or more object from an unique pile;</li>
                                     <li>The player cannot remove 2 or more objects from different piles in the same turn;</li>
                                     <li>Depending on the settings defined:</li>
-                                    <ul>
+                                    <li style="list-style: none;"><ul>
                                         <li>The amount of piles can be defined by the user;</li>
                                         <li>The user can also choose who goes first (player 1 or player 2);</li>
                                         <li>Game can be player online <b>(work in progress)</b> or with a robot;</li>
                                         <li>If <b>SinglePlayer</b> was selected, the player can choose the desired difficulty;</li>
-                                    </ul>
+                                    </ul></li>
                                     <li>In case of a foul play, the game will not register the move, and will wait for a proper move;</li>
                                     <li>Logs about the state of the game are shown below the game area <b>(for foul plays, winning, and play information)</b>;</li>
                                 </ul>
