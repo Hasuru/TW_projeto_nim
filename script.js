@@ -1,9 +1,15 @@
 function openLog() {
-    document.getElementById("logNav").style.visibility = "visible";
-    document.getElementById("main").style.opacity = "0.9";
+    document.getElementById('logNav').style.display = 'block';
 }
 
 function closeLog() {
-    document.getElementById("logNav").style.visibility = "hidden"
-    document.getElementById("main").style.opacity = "1.0";
+    document.getElementById('logNav').style.display = 'none';
+}
+
+function openRules() {
+    document.getElementById('ruleNav').style.display = 'block';
+}
+
+function closeRules() {
+    document.getElementById('ruleNav').style.display = 'none';
 }

@@ -13,35 +13,54 @@
             <h3 onclick="openLog()">Log in</h3>
         </div>
 
+        <!-- Login prompt-->
+        <div id="logNav" class="logNav">
+            <form>
+                <div class="log_container">
+                    <span class="closex" onclick="closeLog()" title="close Login">&times;</span><br>
+
+                    <label for="username"><b>Username</b></label><br>
+                    <input type="text" placeholder="Enter Username" name="username" required><br>
+
+                    <label for="password"><b>Password</b></label><br>
+                    <input type="password" placeholder="Enter Password" name="password" required><br>
+
+                    <button type="submit">Login</button><br>
+                    <label>
+                        <input class="guest" type="checkbox" name="guest"><b>Stay as guest</b>
+                    </label><br>
+                </div>
+            </form>
+        </div>
+
         <div id="main" class="main">
             <div class="container">
                 <!-- Settings Tab -->
                 <div class="settings">
                     <h2>Settings</h2>
                     <hr>
-                    <div>
-                        <h2>Board Size</h2>
-                        <form>
-                            <label for="board_width" class="small_size"><u>Board Width</u></label><br>
-                            <input type="number" id="board_width" name="board_width" value="5">
-                            <input type="submit" value="Submit">
-                        </form>
-                    </div>
-                    <hr>
-                    <div>
-                        <h2>Game Mode</h2>
-                        <form>
+                    <form>
+                        <div>
+                            <label for="board_width"><b>Board Width</b></label><br>
+                            <input type="number" id="board_width" name="board_width" value="1">
+
+                            <h4>Player Starting first</h4>
+                            <label for="player1" class="small_size">Player 1</label>
+                            <input type="radio" id="player1" name="choose_player"><br>
+                            <label for="player2" class="small_size">Player 2</label>
+                            <input type="radio" id="player2" name="choose_player"><br>
+                        </div>
+                        <hr>
+                        <div>
+                            <h2>Game Mode</h2>
                             <label for="single_player" class="small_size">SinglePlayer</label>
                             <input type="radio" id="single_player" name="choose_mode"><br>
                             <label for="multi_player" class="small_size">MultiPlayer</label>
                             <input type="radio" id="multi_player" name="choose_mode"><br>
-                            <input type="submit" value="Submit">
-                        </form>
-                    </div>
-                    <hr>
-                    <div>
-                        <h2>Difficulty</h2>
-                        <form>
+                        </div>
+                        <hr>
+                        <div>
+                            <h2>Difficulty</h2>
                             <label for="easy_diff" class="small_size">Easy</label>
                             <input type="radio" id="easy_diff" name="choose_diff"><br>
                             <label for="medium_diff" class="small_size">Medium</label>
@@ -50,12 +69,38 @@
                             <input type="radio" id="hard_diff" name="choose_diff"><br>
                             <label for="extreme_diff" class="small_size">Extreme</label>
                             <input type="radio" id="extreme_diff" name="choose_diff"><br>
-                            <input type="submit" value="Submit">
-                        </form>
-                    </div>
-                    <hr>
-                    <h2><u>Rules/About</u></h2>
-                    <hr>
+                        </div>
+                        <hr>
+                        <h2 onclick="openRules()">Rules/About</h2>
+                        <div id="ruleNav" class="ruleNav">
+                            <div class="rule_container">
+                                <span class="closex" onclick="closeRules()" title="close Rules/About">&times;</span><br>
+                                <h1 class="about_title"><u>What is the NIM game?</u></h1>
+                                <p> -> Nim is a mathematical game of <span class="highlight">strategy</span> in which 2 players take turns
+                                    to remove objects from distinct piles. In each turn, the player must choose one pile
+                                    and remove at least 1 object from that pile. <b>To win the game you must be the last
+                                    player to remove the final set of objects!</b>
+                                </p>
+
+                                <h1 class="rule_title"><u>What are the Rules?</u></h1>
+                                <ul>
+                                    <li>In each turn, the player must remove 1 or more object from an unique pile;</li>
+                                    <li>The player cannot remove 2 or more objects from different piles in the same turn;</li>
+                                    <li>Depending on the settings defined:</li>
+                                    <ul>
+                                        <li>The amount of piles can be defined by the user;</li>
+                                        <li>The user can also choose who goes first (player 1 or player 2);</li>
+                                        <li>Game can be player online <b>(work in progress)</b> or with a robot;</li>
+                                        <li>If <b>SinglePlayer</b> was selected, the player can choose the desired difficulty;</li>
+                                    </ul>
+                                    <li>In case of a foul play, the game will not register the move, and will wait for a proper move;</li>
+                                    <li>Logs about the state of the game are shown below the game area <b>(for foul plays, winning, and play information)</b>;</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <hr>
+                        <input type="submit" value="Submit Settings">
+                    </form>
                 </div>
 
                 <div class="game">
@@ -66,9 +111,14 @@
                 <div class="leaderboard">
                     <h2>Leaderboards</h2>
                     <hr>
-                    <div class="result_table">
-                        <p>still nothing here</p>
-                    </div>
+                    <p>still nothing here</p>
+                </div>
+            </div>
+
+            <div class="logs">
+                <h4>Logs</h4>
+                <div class="log_box">
+                    <p>Nothing here</p>
                 </div>
             </div>
         </div>
