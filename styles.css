@@ -122,6 +122,25 @@ ul{
 .container div {
     padding-top: 1%;
 }
+  
+.inner_game_piece {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: left;
+    max-width: 750px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+  
+.game_piece{
+    width:85px; 
+    height:85px;
+    border-radius: 50px; 
+    margin:5px;
+    background-color: rgba(51, 60, 74, 1);
+}
+
 
 .settings, .game, .leaderboard {
     display: inline-block;
