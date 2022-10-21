@@ -17,18 +17,20 @@
         <div id="logNav" class="logNav">
             <form>
                 <div class="log_container">
-                    <span class="closex" onclick="closeLog()" title="close Login">&times;</span><br>
+                    <div class="log_auth">
+                        <span class="closex" onclick="closeLog()" title="close Login">&times;</span><br>
 
-                    <label for="username"><b>Username</b></label><br>
-                    <input type="text" id="username" placeholder="Enter Username" name="username" required><br>
+                        <label for="username"><b>Username</b></label><br>
+                        <input type="text" id="username" placeholder="Enter Username" name="username" required><br>
 
-                    <label for="password"><b>Password</b></label><br>
-                    <input type="password" id="password" placeholder="Enter Password" name="password" required><br>
+                        <label for="password"><b>Password</b></label><br>
+                        <input type="password" id="password" placeholder="Enter Password" name="password" required><br>
 
-                    <button type="submit">Login</button><br>
-                    <label>
-                        <input class="guest" type="checkbox" name="guest"><b>Stay as guest</b>
-                    </label><br>
+                        <button type="submit">Login</button>
+                        <label>
+                            <input type="checkbox" name="guest"><b>Stay as guest</b>
+                        </label><br>
+                    </div>
                 </div>
             </form>
         </div>
@@ -98,14 +100,11 @@
                                 </ul>
                             </div>
                         </div>
-                        <hr>
-                        <input type="submit" value="Submit Settings">
                     </form>
                 </div>
                 <div class="game">
                     <h2>Game Board</h2>
                     <hr>
-                    <!--
                     <div class="inner_game_piece">
                         <div class="game_piece" onclick=player_move(0,1) style="cursor: crosshair;"></div>
                     </div>
@@ -133,23 +132,28 @@
                         <div class="game_piece" onclick=player_move(3,6) style="cursor: crosshair;"></div>
                         <div class="game_piece" onclick=player_move(3,7) style="cursor: crosshair;"></div>
                     </div>
-                    -->
                     <script src="script.js"></script>
                     <hr>
-                    Lacks "new game", "give up" and "end of turn" buttons
+                    <div class="game_btn">
+                        <button type="button" onclick="create_game()">New Game</button>
+                        <button type="button">End Turn</button>
+                        <button type="reset">Reset Game</button>
+                    </div>
                 </div>
                   
                 <div class="leaderboard">
                     <h2>Leaderboards</h2>
                     <hr>
-                    <p>still nothing here</p>
+                    <div class="result_box">
+                        <p>- theres no results registered adfsdfadfasdfsfd</p>
+                    </div>
                 </div>
             </div>
 
             <div class="logs">
                 <h4>Logs</h4>
                 <div class="log_box">
-                    <p>Nothing here</p>
+                    <p>lobby: Welcome to NIM!</p>
                 </div>
             </div>
         </div>
