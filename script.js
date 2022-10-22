@@ -14,58 +14,110 @@ function closeRules() {
     document.getElementById('ruleNav').style.display = 'none';
 }
 
-//--------------------------------------------------------------//
-var w;
+var w, difficulty = 4, el = new Array(), game, execnt=0, canclk = new Array(); 
 
-const game = document.createElement("game");
-let num = document.querySelector('board_width');
+window.addEventListener('load',() => {
+    game = document.getElementsByClassName("board");
+    let num = document.querySelector('#board_width');
 
-// Handle number changes
-num.addEventListener('input', function () {
-	let val = num.valueAsNumber;
-    w = val;
-	//console.log(typeof val, val);
+    // Handle number changes
+    w = num.valueAsNumber;
+    num.addEventListener('input', function () {
+        let val = num.valueAsNumber;
+        w = val;
+        console.log(typeof val, val);
+    });
+
+    el[0] = 0;
+
+    for(let i=1; i<=w; i++){
+        el[i]=w+1-i;
+        canclk[i]=1;
+    }
+
+    if(execnt==0){
+        create_game();
+        execnt++;
+    }
+
+    console.log(canclk[1], el[2]);
 });
 
-var el = int(w+1);
-el[0] = 0;
-
-create_game();
-
 function create_game(){
-    for(let i=1; i<=w; i++){
-        el[i] = Math.pow(2,i);
-        let row = document.createElement("inner_game_piece")
-        for(let j=1; j<=pow(2,i)-1; j+=2){
-            let elem = document.createElement("game_piece")
-            row.appendChild(elem);
+    var maxcols=1, wr=9;
+    //9 as a limit for a better gameplay
+    for(let i=1; i<wr; i++){
+        let col = document.createElement("div");
+        col.className = "inner_game_piece";
+        for(let j=1; j<=maxcols; j++){
+            let elem = document.createElement("div");
+            elem.className = "game_piece";
+            elem.onclick = function(){player_move(j,elem);}
+            col.appendChild(elem);
         }
-        game.appendChild(row)
+        game[0].appendChild(col);
+        if(maxcols<w) maxcols++;
     }
 }
 
-function player_move(line, elem) {
-    el[line]--;
-    gb_update(line, elem);
-    if(el[0]+el[1]+el[2]+el[3]==0){
-        checkmate("P");
+function disenabler(col){
+    for(let i=1; i<=w; i++){
+        if(canclk[i]==2) canclk[i]--;
+        if(i!=col && canclk[i]!=0 && col!=0) canclk[i]=2;
     }
-    else{
-        ai_move();
+}
+
+function player_move(col, elem) {
+    if(canclk[col]==1){
+        el[col]--;
+        disenabler(col);
+        gb_update(elem);
+        var activelems = 0; 
+        for(let i=1; i<=w; i++){activelems += i }
+        if(activelems==0){
+            checkmate("P");
+        }
+        else{
+            ai_move();
+        }
     }
+}
+
+function diff_select(){
+    var subm;
+    subm = document.getElementsByName('diff');
+
+    for(let i=0; i<4; i++){
+        if(subm[i] = checked){
+            diff = subm[i].value;
+            break;
+        }
+    }
+
+    console.log(difficulty);
 }
 
 function ai_move(){
-    //how to connect the difficulty chosen on the html?
+    var activelems = 0; 
+    for(let i=1; i<=w; i++){activelems += i }
+    if(activelems==0){
+        checkmate("P");
+    }
+    var chance;
+    //to finish
 }
 
 function isWinning(){
-    var an,or,res;
-    for(let i=1; i<=w-1; i++){
-        an = (el[i] ^ el[i+1])==0;
-        or = (el[i] | el[i+1])==1;
+    var an = el[i], or = el[i], res;
+    if(w>1){
+    for(let i=2; i<=w; i++){
+        an = (an ^ el[i])==0;
+        or = (or | el[i+1])==1;
     }
     res = an^or;
+    }
+    else res = (an==0) ^ (or==1);
+    
     return res;
 }
 
@@ -102,10 +154,11 @@ function checkmate(winner){
     if(winner=="C"){
         alert("Sorry, you lost :(");
     }
-    create_game();
+    document.location.reload();
 }
 
-function gb_update(line, elem){
+function gb_update(elem){
     //how to manipulate a certain element for it to turn on another color and, if possible, taking out its clicking ability?
-    document.getElementById("").style.backgroundColor = rgba(51, 60, 74, 1);
+    elem.style.backgroundColor = "rgb(131, 128, 135)";
+    elem.onclick = null;
 }
