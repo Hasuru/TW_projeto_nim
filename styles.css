@@ -9,19 +9,14 @@ input[type=number] {
     width: 40px;
 }
 
-input[type=submit], input[type=number], 
-button[type=submit], button[type=button] {
+input, 
+button {
     background-color: rgba(131, 128, 135, 1);
     color: rgba(233, 255, 255, 1);
     border: none;
     border-radius: 5px;
     padding-top: 3px;
     padding-bottom: 3px;
-}
-
-input[type=submit]:hover, button[type=submit]:hover{
-    color: rgba(77, 254, 209, 1);
-    transition: 0.5s;
 }
 
 input[type=text], input[type=password]{
@@ -33,6 +28,11 @@ input[type=text], input[type=password]{
     padding: 10px 10px;
     margin: 12px 0;
     box-sizing: border-box;
+}
+
+input[type=submit]:hover, button:hover {
+    color: rgba(77, 254, 209, 1);
+    transition: 0.5s;
 }
 
 h1 {
@@ -160,6 +160,15 @@ ul{
     border-radius: 20px;
     height: auto;
     width: 55%;
+    text-align: center;
+}
+
+.board {
+    display: inline-block;
+}
+
+.game_btn {
+    background-color: rgba(51, 60, 74, 1);
 }
 
 .small_size {
@@ -183,13 +192,14 @@ ul{
 }
 
 .log_container, .rule_container{
+    text-align: center;
     background-color: rgba(51, 60, 74, 1);
-    margin: 5% auto 15% auto;
+    margin: 5% auto 5% auto;
     border: none;
     border-radius: 10px;
-    width: 80%;
+    width: 60%;
     height: auto;
-    padding: 2% 2% 2% 0;
+    padding: 1% 2% 1% 2%;
 }
 
 .closex {
@@ -231,7 +241,21 @@ ul{
     padding: 2% 2% 0 2%;
 }
 
-.logs_box {
+.result_box {
     background-color:rgba(131, 128, 135, 0.5);
+    border: 2px solid rgba(77, 254, 209, 1);
+    border-radius: 5px;
+    height: 82%;
+    margin: 7%;
     overflow: auto;
+    white-space: nowrap;
+}
+
+.log_box {
+    background-color:rgba(131, 128, 135, 0.5);
+    border: 2px solid rgba(77, 254, 209, 1);
+    border-radius: 5px;
+    overflow: auto;
+    width: 95%;
+    margin: 2%;
 }
