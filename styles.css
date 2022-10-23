@@ -120,6 +120,7 @@ ul{
 }
 
 .container div {
+    align-items: center;
     padding-top: 1%;
 }
   
@@ -234,8 +235,3 @@ ul{
     background-color:rgba(131, 128, 135, 0.5);
     overflow: auto;
 }
-
-/* Not working idk why
-.result_table {
-    background-color: rgba(51, 60, 74, 0.6);
-}*/

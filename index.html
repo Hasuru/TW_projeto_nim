@@ -43,14 +43,8 @@
                     <hr>
                     <form>
                         <div>
-                            <label for="board_width"><b>Board Width</b></label><br>
+                            <label for="board_width"><b>Board Size</b></label><br>
                             <input type="number" id="board_width" name="board_width" value="1">
-
-                            <h4>Player Starting first</h4>
-                            <label for="player1" class="small_size">Player 1</label>
-                            <input type="radio" id="player1" name="choose_player"><br>
-                            <label for="player2" class="small_size">Player 2</label>
-                            <input type="radio" id="player2" name="choose_player"><br>
                         </div>
                         <hr>
                         <div>
@@ -64,13 +58,13 @@
                         <div>
                             <h2>Difficulty</h2>
                             <label for="easy_diff" class="small_size">Easy</label>
-                            <input type="radio" id="easy_diff" name="choose_diff"><br>
+                            <input type="radio" id="easy_diff" value=1 name="diff"><br>
                             <label for="medium_diff" class="small_size">Medium</label>
-                            <input type="radio" id="medium_diff" name="choose_diff"><br>
+                            <input type="radio" id="medium_diff" value=4 name="diff"><br>
                             <label for="hard_diff" class="small_size">Hard</label>
-                            <input type="radio" id="hard_diff" name="choose_diff"><br>
+                            <input type="radio" id="hard_diff" value=8 name="diff"><br>
                             <label for="extreme_diff" class="small_size">Extreme</label>
-                            <input type="radio" id="extreme_diff" name="choose_diff"><br>
+                            <input type="radio" id="extreme_diff" value=10 name="diff"><br>
                         </div>
                         <hr>
                         <h2 onclick="openRules()">Rules/About</h2>
@@ -86,7 +80,7 @@
 
                                 <h1 class="rule_title"><u>What are the Rules?</u></h1>
                                 <ul>
-                                    <li>In each turn, the player must remove 1 or more object from an unique pile;</li>
+                                    <li>In each turn, the player must remove 1 or more object from an unique horizontal pile;</li>
                                     <li>The player cannot remove 2 or more objects from different piles in the same turn;</li>
                                     <li>Depending on the settings defined:</li>
                                     <li style="list-style: none;"><ul>
@@ -110,7 +104,7 @@
                     <hr>
                     <div class="game_btn">
                         <button type="reset" onClick="window.location.reload()">New Game / Reset</button>
-                        <button type="reset" onClick="endOfTurn()">End Turn</button>
+                        <button type="button" onClick="endOfTurn()">End Turn</button>
                     </div>
                 </div>
                   
