@@ -119,26 +119,29 @@ function random_play(){
     while(el[pile]==0){
         pile = Math.floor(Math.random() * w) + 1;
     }
-    qnt = Math.floor(Math.random() * el[ran]) + 1;
-
+    qnt = Math.floor(Math.random() * el[pile]) + 1;
+  
     var gm = game[0].getElementsByTagName("div");
     for(let i=1; i<gm.length; i++){
         if(i==pile){
             var rw = gm[i].getElementsByTagName("div");
             for(let j=1; j<=qnt; j++){
                 el[pile]--;
+                //having some issues here
                 rw.removeChild(rw.lastElementChild);
             }
             break;
         }
     }
     if(winCheck()) checkmate("C");
-}
-
-function dec2bin(dec) {
-    return (dec >>> 0).toString(2);
   }
-
+  
+function dec2bin(dec) {
+    var st = ((dec >>> 0).toString(2)).split("").reverse().join("");
+    console.log(dec, st);
+    return dec;
+}
+  
 function winner_move(){
     var pile=2, quantity=2, flag=0, counter=0;
     var pair = new Array();
@@ -150,18 +153,17 @@ function winner_move(){
             var v = pieces.charCodeAt(j)-48; var op=0;
             if(v==1){
                 if(pair[j]%2==0){
-                    op = 1;
                     flag = i;
                     counter += Math.pow(2,j);
                 } else{
-                    op = -1;
                     flag = 0;
                     counter -= Math.pow(2,j);
                 }
             }
-            pair[j] += op*v;
+            pair[j]++;
         }
     }
+}
 
     pile=flag; quantity=counter;
     if(quantity==0) random_play(); 
@@ -189,11 +191,4 @@ function checkmate(winner){
         alert("Sorry, you lost :(");
     }
     document.location.reload();
-}
-
-function gb_update(elem){
-    //how to manipulate a certain element for it to turn on another color and, if possible, taking out its clicking ability?
-    console.log("here!");
-    elem.style.backgroundColor = "rgb(131, 128, 135)";
-    elem.onclick = null;
 }
