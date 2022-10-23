@@ -121,18 +121,7 @@ function random_play(){
     }
     qnt = Math.floor(Math.random() * el[pile]) + 1;
   
-    var gm = game[0].getElementsByTagName("div");
-    for(let i=1; i<gm.length; i++){
-        if(i==pile){
-            var rw = gm[i].getElementsByTagName("div");
-            for(let j=1; j<=qnt; j++){
-                el[pile]--;
-                //having some issues here
-                rw.removeChild(rw.lastElementChild);
-            }
-            break;
-        }
-    }
+    childRemover(pile, qnt);
     if(winCheck()) checkmate("C");
   }
   
@@ -140,6 +129,20 @@ function dec2bin(dec) {
     var st = ((dec >>> 0).toString(2)).split("").reverse().join("");
     console.log(dec, st);
     return dec;
+}
+
+function childRemover(pile, quantity){
+    var gm = game[0].querySelector("div");
+    for(let i=1; i<=w; i++){
+        var rw = gm[i].querySelector("div");
+        if(i==pile){
+            for(let j=1; j<=quantity; j++){
+                el[pile]--;
+                rw.removeChild(rw.lastElementChild);
+            }
+            break;
+        }
+    }
 }
   
 function winner_move(){
@@ -163,22 +166,11 @@ function winner_move(){
             pair[j]++;
         }
     }
-}
 
     pile=flag; quantity=counter;
     if(quantity==0) random_play(); 
+    else childRemover(pile, quantity);
 
-    var gm = game[0].getElementsByTagName("div");
-    for(let i=1; i<gm.length; i++){
-        if(i==pile){
-            var rw = gm[i].getElementsByTagName("div");
-            for(let j=1; j<=quantity; j++){
-                el[pile]--;
-                rw.removeChild(rw.lastElementChild);
-            }
-            break;
-        }
-    }
     if(winCheck()) checkmate("C");
 }
 
