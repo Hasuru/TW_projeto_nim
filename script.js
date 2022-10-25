@@ -132,42 +132,42 @@ function dec2bin(dec) {
 }
 
 function childRemover(pile, quantity){
-    var gm = game[0].querySelector("div");
-    for(let i=1; i<=w; i++){
-        var rw = gm[i].querySelector("div");
+    var rw = game[0].children;
+    for(let i=0; i<rw.length; i++){
+        //var rw = gm[i].querySelector("div");
         if(i==pile){
+            var row = rw[i];
             for(let j=1; j<=quantity; j++){
                 el[pile]--;
-                rw.removeChild(rw.lastElementChild);
+                row.removeChild(row.lastElementChild);
             }
             break;
         }
     }
 }
-  
+
 function winner_move(){
-    var pile=2, quantity=2, flag=0, counter=0;
+    var pile=0, quantity=0;
     var pair = new Array();
     var pieces = new Array();
     for(let i=1; i<=w; i++){
         if(el[i]==0) continue;
         pieces = dec2bin(el[i]);
         for(let j=0; j<pieces.length; j++){
-            var v = pieces.charCodeAt(j)-48; var op=0;
+            var v = pieces.charCodeAt(j)-48;
             if(v==1){
                 if(pair[j]%2==0){
-                    flag = i;
+                    pile = i;
                     counter += Math.pow(2,j);
                 } else{
                     flag = 0;
                     counter -= Math.pow(2,j);
                 }
             }
-            pair[j]++;
+            pair[j]+=v;
         }
     }
 
-    pile=flag; quantity=counter;
     if(quantity==0) random_play(); 
     else childRemover(pile, quantity);
 
