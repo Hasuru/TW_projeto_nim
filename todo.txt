@@ -1,5 +1,13 @@
-Lista de coisas para fazer/alterar
-	Tomas:
-	
-	Hugo:
-	
+- Retirada multipla de pecas (O)
+
+- Obrigar jogador a fazer jogada (& difficuldade) (O)
+
+- Geracao do tabuleiro na vertical
+
+- AI
+
+- LeaderBoard (testar estatico -> passar para SERVER)
+
+
+-Bugs/Erros
+	- Contagem de peças está errada o que leva a certas jogadas não serem possíveis

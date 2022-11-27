@@ -7,88 +7,120 @@ function closeLog() {
 }
 
 function openRules() {
-    document.getElementById('ruleNav').style.display = 'block';
+    document.getElementById('ruleNav').style.display = 'block';elementsAt
 }
 
 function closeRules() {
     document.getElementById('ruleNav').style.display = 'none';
 }
 
-var w, difficulty = 4, el = new Array(), game, execnt=0, maxcols, canclk = new Array(); 
+var width;
+var maxcols; 
+var game;
+var difficulty = 4;
+var executionCount = 0;
+var elementsAt = new Array();
+var constBoard = new Array();
+var cancelClick = new Array(); 
 
 window.addEventListener('load',() => {
     game = document.getElementsByClassName("board");
-    let num = document.querySelector('#board_width');
+    let currentWidth = document.querySelector('#board_width');
 
     // Handle number changes
-    w = num.valueAsNumber;
-    num.addEventListener('input', function () {
-        let val = num.valueAsNumber;
-        w = val;
+    width = currentWidth.valueAsNumber;
+
+    /* DEBUG N Elementos ativos
+    currentWidth.addEventListener('input', function () {
+        let value = currentWidth.valueAsNumber;
+        width = value;
         //console.log(typeof val, val);
-    });
+    });*/
 
-    el[0] = 0; canclk[0] = 0;
-    if(w>=4) maxcols=1;
-        else maxcols=5;
+    elementsAt[0] = 0; cancelClick[0] = 0;
+    if(width >= 4) maxcols=1;
+    else maxcols=5;
 
-    for(let i=1; i<=w; i++){
-        el[i]=maxcols+i*2-2;
-        canclk[i]=1;
+    for(let i = 1; i <= width; i++){
+        elementsAt[i] = maxcols+i*2-2;
+        cancelClick[i] = 1;
     }
 
-    if(execnt==0){
-        var msz=2*w-1;
-        for(let k=1; k<=w; k++){
+    constBoard = elementsAt;
+
+    // todas as rows vao virar cols entretanto
+    if(executionCount == 0) {
+        for(let k = 1; k <= width; k++){
             let row = document.createElement("div");
-            row.className = "inner_game_piece";
-            for(let l=1; l<=maxcols; l++){
-                let elem = document.createElement("div");
-                elem.className = "game_piece";
-                elem.onclick = function(){
-                    if(canclk[k]==1){
+            row.className = "game_column";
+
+            for(let l = 1; l <= maxcols; l++){
+                let piece = document.createElement("div");
+                piece.className = "column_piece";
+
+                piece.onclick = function(){
+                    if(cancelClick[k] == 1){
                         player_move(k);
-                        row.removeChild(row.lastElementChild);
+                        let i = l-1;
+
+                        //Codigo direito
+                        while (i <= constBoard[k]) {
+                            row.removeChild(row.lastChild);
+                            i++;
+                        }
+
+                        //row.removeChild(row.lastElementChild);
                         if(winCheck()) checkmate("P");
                     }
                 }
-                row.appendChild(elem);
+                row.appendChild(piece);
             }
             game[0].appendChild(row);
             maxcols+=2;
         }
-        execnt++;
+        executionCount++;
     }
 });
 
 function disenabler(pile){
-    for(let i=1; i<=w; i++){
-        if(pile==-1) canclk[i]=-1;
-        if(canclk[i]==2) canclk[i]--;
-        if(i!=pile && canclk[i]!=0 && pile!=0) canclk[i]=2;
+    for(let i = 1; i <= width; i++){
+        if(pile == -1) cancelClick[i] = -1;
+        if(cancelClick[i] == 2) cancelClick[i]--;
+        if(i != pile && cancelClick[i] != 0 && pile != 0) cancelClick[i] = 2;
     }
 }
 
 function player_move(pile) {
-    if(canclk[pile]==1){
-        el[pile]--;
-        if(el[pile]==0) canclk[pile] = 0;
+    if(cancelClick[pile]==1){
+        elementsAt[pile]--;
+        if(elementsAt[pile]==0) cancelClick[pile] = 0;
         disenabler(pile);
         if(winCheck()) checkmate("P");
     }
+    
+    disenabler(-1);
+    delay(1000).then(() => {
+        ai_move();
+        disenabler(0);
+    });
 }
 
-function endOfTurn(){
+/*function endOfTurn(){
+    // added board checker to see if the board was altered before disenabling the player
     disenabler(-1);
     ai_move();
     disenabler(0);
-}
+}*/
 
 function winCheck(){
-    var activelems=0;
-    for(let i=1; i<=w; i++){activelems += el[i] }
-    console.log(activelems);
-    if(activelems==0) return true;
+    var activeElements = 0;
+
+    for(let i=1; i<=width; i++) {
+        activeElements += elementsAt[i] 
+    }
+
+    console.log(activeElements);
+    if(activeElements == 0) return true;
     else return false;
 }
 
@@ -101,11 +133,11 @@ function ai_move(){
 }
 
 function isWinning(){
-    var an = el[i], or = el[i], res;
-    if(w>1){
-    for(let i=2; i<=w; i++){
-        an = (an ^ el[i])==0;
-        or = (or | el[i+1])==1;
+    var an = elementsAt[i], or = elementsAt[i], res;
+    if(width>1){
+    for(let i=2; i<=width; i++){
+        an = (an ^ elementsAt[i])==0;
+        or = (or | elementsAt[i+1])==1;
     }
     res = an^or;
     }
@@ -116,10 +148,10 @@ function isWinning(){
 
 function random_play(){
     var pile = 0, qnt=0;
-    while(el[pile]==0){
-        pile = Math.floor(Math.random() * w) + 1;
+    while(elementsAt[pile]==0){
+        pile = Math.floor(Math.random() * width) + 1;
     }
-    qnt = Math.floor(Math.random() * el[pile]) + 1;
+    qnt = Math.floor(Math.random() * elementsAt[pile]) + 1;
   
     childRemover(pile, qnt);
     if(winCheck()) checkmate("C");
@@ -138,7 +170,7 @@ function childRemover(pile, quantity){
         if(i==pile){
             var row = rw[i];
             for(let j=1; j<=quantity; j++){
-                el[pile]--;
+                elementsAt[pile]--;
                 row.removeChild(row.lastElementChild);
             }
             break;
@@ -150,9 +182,9 @@ function winner_move(){
     var pile=0, quantity=0;
     var pair = new Array();
     var pieces = new Array();
-    for(let i=1; i<=w; i++){
-        if(el[i]==0) continue;
-        pieces = dec2bin(el[i]);
+    for(let i=1; i<=width; i++){
+        if(elementsAt[i]==0) continue;
+        pieces = dec2bin(elementsAt[i]);
         for(let j=0; j<pieces.length; j++){
             var v = pieces.charCodeAt(j)-48;
             if(v==1){
@@ -184,3 +216,7 @@ function checkmate(winner){
     }
     document.location.reload();
 }
+
+function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
+  }

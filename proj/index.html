@@ -44,7 +44,7 @@
                     <form>
                         <div>
                             <label for="board_width"><b>Board Size</b></label><br>
-                            <input type="number" id="board_width" name="board_width" max="7" min="2" value="4">
+                            <input type="number" id="board_width" name="board_width" value="4">
                         </div>
                         <hr>
                         <div>
@@ -96,39 +96,15 @@
                         </div>
                     </form>
                 </div>
-                <!--Game Board-->
                 <div class="game">
                     <h2>Game Board</h2>
                     <hr>
                     <div class="board">
-                        <!--
-                        <div class="game_column">
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                        </div>
-                        <div class="game_column">
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                        </div>
-                        -->
+                        <script src="script.js"></script>
                     </div>
-                    <div class="game_footing">
-                        <hr>
-                        <button type="reset" class="game_btn" onClick="window.location.reload()">New Game</button>
-                        <!--<button type="button" class="game_btn" onClick="endOfTurn()">End Turn</button>-->
-                    </div>
+                    <hr>
+                    <button type="reset" class="game_btn" onClick="window.location.reload()">New Game</button>
+                    <button type="button" class="game_btn" onClick="endOfTurn()">End Turn</button>
                 </div>
                   
                 <div class="leaderboard">
