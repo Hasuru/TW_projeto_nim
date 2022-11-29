@@ -46,21 +46,24 @@ window.addEventListener('load',() => {
         cancelClick[i] = 1;
     }
 
+
     // todas as rows vao virar cols entretanto
     if(executionCount == 0) {
         for(let k = 1; k <= width; k++){
             let row = document.createElement("div");
             row.className = "game_column";
 
-            for(let l = 1; l <= maxcols; l++){
+            for(let l = 1; l <= maxcols ; l++){
                 let piece = document.createElement("div");
+                piece.id = "piece_" + k + "_" + l;
                 piece.className = "column_piece";
 
                 piece.onclick = function(){
                     if(cancelClick[k] == 1){
                         disabler(-1);
-                        let quantity = elementsAt[k]-l+1;
+                        let quantity = l;
                         childRemover(k, quantity);
+                        console.log("K:" + k + " quantity:" + l);
 
                         delay(1000).then(() => {
                             ai_move();
@@ -70,7 +73,8 @@ window.addEventListener('load',() => {
                         //row.removeChild(row.lastElementChild);
                         //if(winCheck()) checkmate("P");
                     }
-                }
+                } 
+                
                 row.appendChild(piece);
             }
             game[0].appendChild(row);

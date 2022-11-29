@@ -125,19 +125,20 @@ ul{
 }
   
 .game_column {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    position:relative;
+    vertical-align:bottom;
+    display:inline-block;
+    height: auto;
     justify-content: left;
-    max-width: 750px;
+    max-width: 100px;
     margin: 0 auto;
-    flex-wrap: wrap;
+    width: 60px;
 }
   
 .column_piece{
     clear: both;
     width:45px; 
-    height:35px;
+    height:45px;
     border-radius: 50px; 
     margin:5px;
     background-color: rgba(51, 60, 74, 1);
