@@ -219,4 +219,26 @@ function checkmate(winner){
 
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
-  }
+}
+
+// SERVER
+/* STAND-BY
+do(command, value) {
+    const xhr = new XMLHttpRequest();
+    const display = this.display;
+
+    // true -> async | false -> sync
+    xhr.open('POST', 'http://'+host+':'+port+'/'+command, true);
+    // cabecalhos => xhr.setRequestHeader('Content-Type','text/plain');
+    // pedidos a outros dominios => xhr.withCredentials = true;
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState < 4) return;
+        if (xhr.status == 200) {
+            display.innerText = xhr.responseText;
+        } else {
+            console.log(xhr.status+' '+xhr.statusMessage);
+        }
+    }
+
+    xhr.send(JSON.stringify({'command': command, 'value': value}));
+}*/
