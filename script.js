@@ -7,7 +7,7 @@ function closeLog() {
 }
 
 function openRules() {
-    document.getElementById('ruleNav').style.display = 'block';elementsAt
+    document.getElementById('ruleNav').style.display = 'block';
 }
 
 function closeRules() {
@@ -46,8 +46,6 @@ window.addEventListener('load',() => {
         cancelClick[i] = 1;
     }
 
-    constBoard = elementsAt;
-
     // todas as rows vao virar cols entretanto
     if(executionCount == 0) {
         for(let k = 1; k <= width; k++){
@@ -60,17 +58,17 @@ window.addEventListener('load',() => {
 
                 piece.onclick = function(){
                     if(cancelClick[k] == 1){
-                        player_move(k);
-                        let i = l-1;
+                        disabler(-1);
+                        let quantity = elementsAt[k]-l+1;
+                        childRemover(k, quantity);
 
-                        //Codigo direito
-                        while (i <= constBoard[k]) {
-                            row.removeChild(row.lastChild);
-                            i++;
-                        }
+                        delay(1000).then(() => {
+                            ai_move();
+                            disabler(0);
+                        });
 
                         //row.removeChild(row.lastElementChild);
-                        if(winCheck()) checkmate("P");
+                        //if(winCheck()) checkmate("P");
                     }
                 }
                 row.appendChild(piece);
@@ -82,7 +80,17 @@ window.addEventListener('load',() => {
     }
 });
 
-function disenabler(pile){
+function childRemover(pile, quantity){
+    var rw = game[0].children;
+    
+    var row = rw[pile-1];
+    for(let j=1; j<=quantity; j++){
+        elementsAt[pile]--;
+        row.removeChild(row.lastElementChild);
+    }
+}
+
+function disabler(pile){
     for(let i = 1; i <= width; i++){
         if(pile == -1) cancelClick[i] = -1;
         if(cancelClick[i] == 2) cancelClick[i]--;
@@ -92,24 +100,18 @@ function disenabler(pile){
 
 function player_move(pile) {
     if(cancelClick[pile]==1){
-        elementsAt[pile]--;
         if(elementsAt[pile]==0) cancelClick[pile] = 0;
-        disenabler(pile);
+        disabler(pile);
         if(winCheck()) checkmate("P");
     }
-    
-    disenabler(-1);
-    delay(1000).then(() => {
-        ai_move();
-        disenabler(0);
-    });
+
 }
 
 /*function endOfTurn(){
     // added board checker to see if the board was altered before disenabling the player
-    disenabler(-1);
+    disabler(-1);
     ai_move();
-    disenabler(0);
+    disabler(0);
 }*/
 
 function winCheck(){
@@ -163,23 +165,8 @@ function dec2bin(dec) {
     return dec;
 }
 
-function childRemover(pile, quantity){
-    var rw = game[0].children;
-    for(let i=0; i<rw.length; i++){
-        //var rw = gm[i].querySelector("div");
-        if(i==pile){
-            var row = rw[i];
-            for(let j=1; j<=quantity; j++){
-                elementsAt[pile]--;
-                row.removeChild(row.lastElementChild);
-            }
-            break;
-        }
-    }
-}
-
 function winner_move(){
-    var pile=0, quantity=0;
+    var pile=0, counter=0;
     var pair = new Array();
     var pieces = new Array();
     for(let i=1; i<=width; i++){
@@ -200,8 +187,8 @@ function winner_move(){
         }
     }
 
-    if(quantity==0) random_play(); 
-    else childRemover(pile, quantity);
+    if(counter==0) random_play(); 
+    else childRemover(pile, counter);
 
     if(winCheck()) checkmate("C");
 }
