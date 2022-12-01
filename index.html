@@ -15,24 +15,22 @@
 
         <!-- Login prompt-->
         <div id="logNav" class="logNav">
-            <form>
-                <div class="log_container">
-                    <div class="log_auth">
-                        <span class="closex" onclick="closeLog()" title="close Login">&times;</span><br>
+            <div class="log_container">
+                <div class="log_auth">
+                    <span class="closex" onclick="closeLog()" title="close Login">&times;</span><br>
 
-                        <label for="username"><b>Username</b></label><br>
-                        <input type="text" id="username" placeholder="Enter Username" name="username" required><br>
+                    <label for="username"><b>Username</b></label><br>
+                    <input type="text" id="username" placeholder="Enter Username" name="username" required><br>
 
-                        <label for="password"><b>Password</b></label><br>
-                        <input type="password" id="password" placeholder="Enter Password" name="password" required><br>
+                    <label for="password"><b>Password</b></label><br>
+                    <input type="password" id="password" placeholder="Enter Password" name="password" required><br>
 
-                        <button type="submit">Login</button>
-                        <label>
-                            <input type="checkbox" name="guest"><b>Stay as guest</b>
-                        </label><br>
-                    </div>
+                    <button onclick="action_register()">Login</button>
+                    <label>
+                        <input type="checkbox" name="guest"><b>Stay as guest</b>
+                    </label><br>
                 </div>
-            </form>
+            </div>
         </div>
 
         <div id="main" class="main">
@@ -50,7 +48,7 @@
                         <div>
                             <h2>Game Mode</h2>
                             <label for="single_player" class="small_size">SinglePlayer</label>
-                            <input type="radio" id="single_player" name="choose_mode"><br>
+                            <input type="radio" id="single_player" name="choose_mode" checked><br>
                             <label for="multi_player" class="small_size">MultiPlayer</label>
                             <input type="radio" id="multi_player" name="choose_mode"><br>
                         </div>
@@ -101,28 +99,6 @@
                     <h2>Game Board</h2>
                     <hr>
                     <div class="board">
-                        <!--
-                        <div class="game_column">
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                        </div>
-                        <div class="game_column">
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                            <div class="column_piece"></div>
-                        </div>
-                        -->
                     </div>
                     <div class="game_footing">
                         <hr>

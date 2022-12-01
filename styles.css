@@ -144,6 +144,21 @@ ul{
     background-color: rgba(51, 60, 74, 1);
 }
 
+.small_column_piece{
+    clear: both;
+    width:25px; 
+    height:25px;
+    border-radius: 50px; 
+    margin:5px;
+    background-color: rgba(51, 60, 74, 1);
+}
+
+.board{
+    height: 75%;
+    display: inline-block;
+    position: relative;
+    vertical-align: bottom;
+}
 
 .settings, .game, .leaderboard {
     display: inline-block;

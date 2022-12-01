@@ -22,6 +22,7 @@ var executionCount = 0;
 var elementsAt = new Array();
 var constBoard = new Array();
 var cancelClick = new Array(); 
+const baseurl = "http://twserver.alunos.dcc.fc.up.pt:8008";
 
 window.addEventListener('load',() => {
     game = document.getElementsByClassName("board");
@@ -56,7 +57,8 @@ window.addEventListener('load',() => {
             for(let l = 1; l <= maxcols ; l++){
                 let piece = document.createElement("div");
                 piece.id = "piece_" + k + "_" + l;
-                piece.className = "column_piece";
+                if(width>5) piece.className = "small_column_piece";
+                else piece.className = "column_piece";
 
                 piece.onclick = function(){
                     if(cancelClick[k] == 1){
@@ -83,6 +85,7 @@ window.addEventListener('load',() => {
         executionCount++;
     }
 });
+
 
 function childRemover(pile, quantity){
     var rw = game[0].children;
@@ -233,3 +236,25 @@ do(command, value) {
 
     xhr.send(JSON.stringify({'command': command, 'value': value}));
 }*/
+
+function action_register() {
+    var user = document.getElementById('username').value;
+    var password = document.getElementById('password').value;
+    API_register(user, password);
+}
+
+function API_register(nick, password){
+    var url = baseurl + "/register";
+    var request = {'nick':nick, 'password':password};
+    var response = fetch(url, {
+        method:'POST',
+        body: JSON.stringify(request)
+    });
+    response.then((resp)=>{
+        var json = resp.json();
+        console.log(json);
+    })
+    .catch((err)=>{
+        alert(err);
+    });
+}
