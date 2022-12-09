@@ -24,7 +24,9 @@ var constBoard = new Array();
 var cancelClick = new Array(); 
 const baseurl = "http://twserver.alunos.dcc.fc.up.pt:8008";
 
-window.addEventListener('load',() => {
+window.addEventListener('load', createGame)
+
+function createGame(){
     game = document.getElementsByClassName("board");
     let currentWidth = document.querySelector('#board_width');
 
@@ -84,8 +86,7 @@ window.addEventListener('load',() => {
         }
         executionCount++;
     }
-});
-
+}
 
 function childRemover(pile, quantity){
     var rw = game[0].children;
@@ -208,123 +209,55 @@ function checkmate(winner){
     if(winner=="C"){
         alert("Sorry, you lost :(");
     }
-    document.location.reload();
+
+    window.removeEventListener('load', createGame);
+    window.addEventListener('load', createGame)
 }
 
 function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
 
+// SERVER
+/* STAND-BY
+do(command, value) {
+    const xhr = new XMLHttpRequest();
+    const display = this.display;
+
+    // true -> async | false -> sync
+    xhr.open('POST', 'http://'+host+':'+port+'/'+command, true);
+    // cabecalhos => xhr.setRequestHeader('Content-Type','text/plain');
+    // pedidos a outros dominios => xhr.withCredentials = true;
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState < 4) return;
+        if (xhr.status == 200) {
+            display.innerText = xhr.responseText;
+        } else {
+            console.log(xhr.status+' '+xhr.statusMessage);
+        }
+    }
+
+    xhr.send(JSON.stringify({'command': command, 'value': value}));
+}*/
+
 function action_register() {
     var user = document.getElementById('username').value;
     var password = document.getElementById('password').value;
-    //console.log("User: " + user + " | Pass: " + password);
     API_register(user, password);
 }
 
-async function API_register(nick, password){
+function API_register(nick, password){
     var url = baseurl + "/register";
     var request = {'nick':nick, 'password':password};
-    const response = await fetch(url, {
-        method:'POST',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(request)
-    });
-    response.then(res => {
-        if (!res.ok) {
-            console.error("Error: User registered with a different password");
-        }
-        res.json();
-        // mudar html para dispor do nome do user na pagina
-    })
-    // DEBUG purpose
-    response.then(data => {
-        console.log(data);
-    })
-}
-
-function action_join() {
-    var group = 21;
-    var nick = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-    var size = document.getElementById('board_width').valueAsNumber;
-
-    API_join(group, nick, password, size);
-}
-
-async function API_join(group, nick, password, size) {
-    var url = baseurl + "/join";
-    var request = {'group':group, 'nick':nick, 'password':password, 'size':size};
-    var response = await fetch(url, {
-        method:'POST',
-        headers:{
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(request)
-    });
-    response.then(res => {
-        if (!res.ok) {
-            console.error("Error: Cannot join Game");
-        }
-        res.json();
-    })
-    response.then(data => console.log(data));
-}
-
-function action_leave()
-
-async function API_leave(nick, password, game) {
-    var url = baseurl + "/leave";
-    var request = {'nick':nick, 'password':password, 'game':game};
-    var response = await fetch(url, {
+    var response = fetch(url, {
         method:'POST',
         body: JSON.stringify(request)
     });
-    response.then((resp) => {console.log(resp)})
-    .catch((error) => {
-        alert(error);
+    response.then((resp)=>{
+        var json = resp.json();
+        console.log(json);
     })
-}
-
-/* test
-
-async function API_notify(nick, password, game, stack, pieces) {
-    var url = baseurl + "/notify";
-    var request = {'nick':nick, 'password':password, 'game':game, 'stack':stack, 'pieces':pieces};
-    var response = await fetch(url, {
-        method:'POST',
-        body: JSON.stringify(request)
+    .catch((err)=>{
+        alert(err);
     });
-    response.then((resp) => {console.log(resp)})
-    .catch((error) => {
-        alert(error);
-    })   
 }
-
-async function API_update(game, nick) {
-    var url = baseurl + "/update";
-    var request = {'game':game, 'nick':nick};
-    var response = await fetch(url, {
-        method:'GET',
-        body: JSON.stringify(request)
-    });
-    response.then((resp) => {console.log(resp)})
-    .catch((error) => {
-        alert(error);
-    })
-}
-
-async function API_ranking(group, size) {
-    var url = baseurl + "/ranking";
-    var request = {'group':group, 'size':size};
-    var response = await fetch(url, {
-        method:'POST',
-        body: JSON.stringify(request)
-    });
-    response.then((resp) => {console.log(resp)})
-    .catch((error) => {
-        alert(error);
-    })
-}*/
