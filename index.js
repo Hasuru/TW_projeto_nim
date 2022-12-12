@@ -1,156 +1,93 @@
-/*
-const http = require('http');
-//require('./script.js');
-
-const server = http.createServer(function (request, response) {
-    response.writeHead(200, {'Content-Type': 'text/plain'});
-    response.end('Olá mundo\n');
-});
-
-server.listen(8021);
-
-var nick; // Nickname
-var password; // Password
-var group = 21; // Group Id
-var size; // Number of columns
-var initial; // Number of pieces
-var jogo; // Game counter
-var move; // Playing row
-var erasedpieces; // Number of elements cut
-var state; // Tells the player if a certain play if doable or not
-var scoreboard; // Scoretable
-
-function request(command, object) {
-
-    const xhr = new XMLHttpRequest();
-
-    xhr.open('POST','http://twserver.alunos.dcc.fc.up.pt:8021/'+command,true);
-
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == 4) {
-            const data = JSON.parse(xhr.responseText);
-            switch(command) {
-                case 'join':
-                    if (data.error) {
-                        alert(JSON.stringify(data.error));
-                    } else {
-                        alert("Jogo criado com sucesso!");
-                        jogo = data.game;
-                        //update();
-                    }
-
-                    break;
-                case 'leave':
-                    if (data.error) {
-                        alert(JSON.stringify(data.error));
-                    } else {
-                        alert("Desistiu!");
-                        //openCity(event ,'config');
-                    }
-                    break;
-                case 'notify':
-                    //console.log(jogo);
-                    //console.log(object);
-                    if (data.error) {
-                        alert(JSON.stringify(data.error));
-                    } else {
-                        
-                    }
-                    break;
-                case 'ranking':
-                    if (data.error) {
-                        alert(JSON.stringify(data.error));
-                    } else {
-                        scoreboard = data.ranking;
-                        //console.log(data.ranking);
-                        //console.log(scoreboard);
-                        let result = scoreboard.reduce((acc,cur) => 
-                        acc.push(Object.values(cur)) && acc, [Object.keys(scoreboard[0])])
-                        var html = '<table class="styled-table">';
-                        html += '<tr class="active-row">';
-                        html += '<th>' + "Nick" + '</th>';
-                        html += '<th>' + "Vitorias" + '</th>';
-                        html += '<th>' + "Jogos" + '</th>';
-                        html += '</tr>';
-                        for( var i = 1; i < result.length; i++) {
-                        html += '<tr>';
-                        for( var j in result[i] ) {
-                        html += '<td>' + result[i][j] + '</td>';
-                        }
-                        html += '</tr>';
-                        }
-                        html += '</table>';
-                        document.getElementById('tabelaClass').innerHTML = html;
-                    }
-                    break;
-                case 'register':
-                    if (data.error) {
-                        alert("Password não correspondente ao utilizador");
-                    } else {
-                        alert("Login efetuado com sucesso!");
-                        //openCity(event ,'config');
-                    }
-                    break;
-                case 'update':
-                    if (data.error) {
-                        alert("Password não correspondente ao utilizador");
-                    } else {
-                    }
-                    break;            
-            }
-        }
-    }
-
-    xhr.send(JSON.stringify(object));      
-
-    //if(xhr.status == 200) {
-    //    this.display.innerText = xhr.responseText;
-    //()}
-}
-
-function register() {
-    nick = document.getElementById('nick').value;
-    password = document.getElementById('pass').value;
-
-    let objt = { "nick": nick, "password": password };
-    request('register', objt);
-}
-
-function ranking() {
-    let objt = {};
-    request('ranking', objt);
-}*/
-
-
-
 const http = require('http');
 const url = require('url');
-var baseURL = "http://twserver.alunos.dcc.fc.up.pt:8021";
-var parsedURL = url.parse(baseURL, true);
-
-require('./script.js'); 
+const baseURL = "http://twserver.alunos.dcc.fc.up.pt:8021/";
+const reg = require ('./regiServ.js');
+const cnfg = require ('./configs.js');
+//require('script.js');
+//import {action_register} from './comm.js';
 
 const server = http.createServer(function (request, response) {
-    response.writeHead(200, {headers});
-    const parsedUrl = url.parse(request.url.true);
-    let answer = {};
-    if(answer.status === undefined)
-        answer.status = 200;
-    if(answer.style === undefined)
-        answer.style = 'plain';
-    switch(request.method){
+    const parsedUrl = url.parse(request.url, true);
+
+    var clientmsg;
+    var msg = "";
+    var error;
+    var body = '';
+    var nick;
+    var pass;
+
+    switch (request.method) {
         case 'POST':
-            const pathname = parsedURL.pathname;
-            answer = doPostRequest(pathname, request);
+            request
+                .on('data', (chunk) => { body += chunk; })
+                .on('end', () => {
+
+                    try {
+                        clientmsg = JSON.parse(body);
+
+                        switch (parsedUrl.pathname) {
+
+                            case '/register':
+                                error = { "error": "User registered with a different password" };
+                                nick = clientmsg.nick;
+                                pass = clientmsg.pass;
+
+                                console.log("Nick: " + nick);
+                                console.log("Pass: " + pass);
+
+                                const newReg = new reg.ClassReg(nick, pass);
+
+                                if (reg.checkNick(nick)) {
+                                     register.push(newReg);
+                                     msg = 'Registration completed!\nNick: \"' + nick + "\" Pass: \"" + pass + "\"";
+                                     response.writeHead(200, cnfg.headers.txt);
+                                }
+                                else {
+                                     response.writeHead(401, cnfg.headers.txt);
+                                     msg = JSON.stringify(error);
+
+                                }
+
+                                console.log(register);
+                                break;
+
+                            case '/ranking':
+
+                                response.writeHead(200, cnfg.headers.json);
+                                msg = JSON.stringify({ rank: rank });
+
+                                break;
+
+                            case '/join':
+                                //unfinished
+                                break;
+
+                            default:
+                                response.writeHead(404, cnfg.headers.txt);
+                                msg = "command not defined";
+                                break;
+                        }
+
+                        console.log(msg);
+                        response.end(msg);
+                    }
+                    catch (err) { 
+                        console.log(err); 
+                    }
+                })
+                .on('error', (err) => { 
+                    console.log(err.message); 
+                });
+
+        case 'GET':
             break;
+
         default:
-            answer.status = 400;
-            response.end();
+            break;
     }
-    response.writeHead(answer.status, headers[answer.style]);
-    if(answer.style === 'plain')
-        response.end();
-    console.log("New POST request");
+    //response.end("All Done")
 });
 
-server.listen(8021);
+server.listen(8021, () => {
+    console.log("Server running on port " + 8021);
+});
