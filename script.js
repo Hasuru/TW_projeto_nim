@@ -16,22 +16,78 @@ function closeRules() {
 
 var width;
 var maxcols; 
-var game;
+var board;
 var difficulty = 4;
 var executionCount = 0;
+
 var elementsAt = new Array();
 var constBoard = new Array();
 var cancelClick = new Array(); 
-const baseurl = "http://twserver.alunos.dcc.fc.up.pt:8008";
 
-window.addEventListener('load', createGame)
+var game //game id retornado pelo servidor
 
-function createGame(){
-    game = document.getElementsByClassName("board");
-    let currentWidth = document.querySelector('#board_width');
+// flags
+var modeFlag;
+var diffFlag;
 
-    // Handle number changes
-    width = currentWidth.valueAsNumber;
+function selectedDiff(easy, medium, hard, extreme) {
+    if (easy) return 1;
+    if (medium) return 2;
+    if (hard) return 3;
+    if (extreme) return 4;
+    return 0;
+
+}
+
+function verifyGameSettings() {
+        // verificar board
+        board = document.getElementsByClassName("board");
+        width = document.querySelector('#board_width').valueAsNumber;
+
+        //verificar modo
+        let singlePlayer = document.getElementById('single_player').checked;
+        let multiPlayer = document.getElementById('multi_player').checked;
+    
+        //verificar diff
+        let easy = document.getElementById('easy_diff').checked;
+        let medium = document.getElementById('medium_diff').checked;
+        let hard = document.getElementById('hard_diff').checked;
+        let extreme = document.getElementById('extreme_diff').checked;
+
+        if (width == 0) {
+            alert("Invalid width value");
+            return false;
+        }
+    
+        if (singlePlayer) {
+            diffFlag = selectedDiff(easy, medium, hard, extreme);
+            if (diffFlag == 0) {
+                alert("No difficulty selected");
+                return false;
+            }
+
+            modeFlag = 1;
+        }
+    
+        if (!multiPlayer && !singlePlayer) {
+            alert("No mode selected");
+            return false;
+        }
+
+        if (multiPlayer) modeFlag = 2;
+
+        return true;
+}
+
+function createGame() {
+    //console.log("entrou createGame");
+    if (!verifyGameSettings()) return false;
+    createBoard();
+}
+
+function createBoard(){
+    //console.log("entrou createBoard")
+
 
     /* DEBUG N Elementos ativos
     currentWidth.addEventListener('input', function () {
@@ -81,7 +137,7 @@ function createGame(){
                 
                 row.appendChild(piece);
             }
-            game[0].appendChild(row);
+            board[0].appendChild(row);
             maxcols+=2;
         }
         executionCount++;
@@ -89,7 +145,7 @@ function createGame(){
 }
 
 function childRemover(pile, quantity){
-    var rw = game[0].children;
+    var rw = board[0].children;
     
     var row = rw[pile-1];
     for(let j=1; j<=quantity; j++){
@@ -240,24 +296,186 @@ do(command, value) {
     xhr.send(JSON.stringify({'command': command, 'value': value}));
 }*/
 
+
+// server & communication
+const baseurl = "http://twserver.alunos.dcc.fc.up.pt:8008";
+const group = 21;
+
 function action_register() {
-    var user = document.getElementById('username').value;
-    var password = document.getElementById('password').value;
-    API_register(user, password);
+    let nick = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    console.log("Register -> nick:"+nick+" |password:"+password);
+
+    // Nao ha data para autenticacao
+    if (!nick || !password) throw new TypeError("User not registered");
+
+    // esta tudo bem, podemos fazer pedido
+    API_register(nick, password);
 }
 
-function API_register(nick, password){
-    var url = baseurl + "/register";
-    var request = {'nick':nick, 'password':password};
-    var response = fetch(url, {
-        method:'POST',
-        body: JSON.stringify(request)
-    });
-    response.then((resp)=>{
-        var json = resp.json();
-        console.log(json);
+async function API_register(nick, password) {
+    let url = baseurl + '/register'
+    let object = {nick: nick, password: password};
+    let request = JSON.stringify(object);
+
+    await fetch(url, {
+        method: 'POST',
+        headers: {'Content-Type':'application/json'},
+        body: request
     })
-    .catch((err)=>{
-        alert(err);
-    });
+        .then((response) => {
+            if (!response.ok) {
+                // verificar se nao houve problemas com o envio do servidor
+                throw new TypeError("SERVER ERROR:" + response.status);
+            } else  {
+                const ContentType = response.headers.get('content-type');
+                if (!ContentType || !ContentType.includes('application/json')) throw new TypeError("JSON not found");
+                // retornar traducao do json para o campo data
+                response.json();
+            }
+        })
+        .then((data) => {
+            // fazer coisas com a data
+            console.log(data);
+        })
+        .catch((error) => {
+            console.error("Fetch error:", error);
+        })
+}
+
+function action_join() {
+    if (!action_register()) return; // user nao esta autenticado
+
+    let nick = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+    let size = document.getElementById('board_width').valueAsNumber;
+    console.log("Group:"+group+" |nick:"+nick+" |pass:"+password+" |size:"+size);
+
+    if (!size) throw new TypeError("Board Size not selected");
+
+    API_join(group, nick, password, size);
+}
+
+async function API_join(group, nick, password, size) {
+    let url = baseurl + '/join';
+    let object = {group: group, nick: nick, password: password, size: size};
+    let request = JSON.stringify(object);
+
+    await fetch(url,  {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: {
+            request
+        }
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new TypeError("SERVER SIDE ERROR:" + response.status);
+            } else {
+                const ContentType = response.headers.get('content-type');
+                if (!ContentType || !ContentType.includes('application/json')) throw new TypeError("JSON not found");
+                response.json();
+            }
+        })
+        .then((data) => {
+            game = data.game;
+            if (!createGame()) {
+                alert("Could not create Game");
+                location.reload();
+            }
+            alert("Game created successfully");
+        })
+        .catch((error) => {
+            console.error("Fetch error:" + error);
+        })
+}
+
+function action_leave() {
+    if (!action_register() || !game) return;
+
+    let nick = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+
+    API_leave(nick, password, game);
+}
+
+async function API_leave(nick, password, game) {
+    let url = baseurl + '/leave';
+    let object = {nick:nick, password:password, game:game};
+    let request = JSON.stringify(object);
+
+    await fetch(url, {
+        method:'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: request
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new TypeError("SERVER SIDE ERROR:" + response.status);
+            } else {
+                const ContentType = response.headers.get('content-type');
+                if (!ContentType || !ContentType.includes('application/json')) throw new TypeError("JSON not found");
+                response.json();
+            }
+        })
+        .then((data) => {
+            console.log(data);
+            // dar update para determinar winner:null ou winner:outro player
+            action_update()
+            // leave sucesso -> dar refresh a pagina
+            location.reload();
+        })
+        .catch((error) => {
+            console.error("Fetch error:" + error)
+        })
+}
+
+function action_notify(stack, pieces) {
+    if (!action_register() || !game) return;
+
+    let nick = document.getElementById('username').value;
+    let password = document.getElementById('password').value;
+
+    API_notify(nick, password, game, stack, pieces);
+}
+
+async function API_notify(nick, password, game, stack, pieces) {
+    let url = baseurl + '/notify';
+    let object = {nick:nick, password:password, game:game, stack:stack, pieces:pieces};
+    let request = JSON.stringify(object);
+
+    await fetch(url, {
+        method:'POST',
+        headers: {
+            'Content-Type':'application/json'
+        },
+        body: request
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new TypeError("SERVER SIDE ERROR:" + response.statusText);
+            } else {
+                const ContentType = response.headers.get('content-type');
+                if (!ContentType || !ContentType.includes('application/json')) throw new TypeError("JSON not found");
+                response.json();
+            }
+        })
+        .then((data) => {
+            console.log(data);
+            // dar update para atualizar board
+            action_update()
+        })
+        .catch((error) => {
+            console.error("Fetch error:" + error)
+        })
+}
+
+function action_ranking() {
+    if (width < 2 || width > 7) return;
+
+    API_ranking();
 }
