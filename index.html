@@ -5,12 +5,13 @@
         <meta name="viewport" content="width:device-width, initial-scale=1.0">
         <link rel="stylesheet" href="styles.css">
         <script src="script.js"></script>
+        <script src='comm.js'></script>
         <title>N I M</title>
     </head>
     <body>
         <div class="header">
             <h1>N I M</h1>
-            <h3 onclick="openLog()">Log in</h3>
+            <h3 onclick="openLog()" id="auth">Log in</h3>
         </div>
 
         <!-- Login prompt-->
@@ -25,10 +26,7 @@
                     <label for="password"><b>Password</b></label><br>
                     <input type="password" id="password" placeholder="Enter Password" name="password" required><br>
 
-                    <button onclick="action_register()">Login</button>
-                    <label>
-                        <input type="checkbox" name="guest"><b>Stay as guest</b>
-                    </label><br>
+                    <button onclick="register()">Login</button>
                 </div>
             </div>
         </div>
@@ -42,15 +40,15 @@
                     <form>
                         <div>
                             <label for="board_width"><b>Board Size</b></label><br>
-                            <input type="number" id="board_width" name="board_width" max="7" min="2" value="4">
+                            <input type="number" id="board_width" name="board_width" max="7" min="2" value="0">
                         </div>
                         <hr>
                         <div>
                             <h2>Game Mode</h2>
                             <label for="single_player" class="small_size">SinglePlayer</label>
-                            <input type="radio" id="single_player" name="choose_mode" checked><br>
+                            <input type="radio" id="single_player" name="choose_mode"><br>
                             <label for="multi_player" class="small_size">MultiPlayer</label>
-                            <input type="radio" id="multi_player" name="choose_mode"><br>
+                            <input type="radio" id="multi_player" name="choose_mode" checked><br>
                         </div>
                         <hr>
                         <div>
@@ -58,7 +56,7 @@
                             <label for="easy_diff" class="small_size">Easy</label>
                             <input type="radio" id="easy_diff" value=1 name="diff"><br>
                             <label for="medium_diff" class="small_size">Medium</label>
-                            <input type="radio" id="medium_diff" value=4 name="diff" checked><br>
+                            <input type="radio" id="medium_diff" value=4 name="diff"><br>
                             <label for="hard_diff" class="small_size">Hard</label>
                             <input type="radio" id="hard_diff" value=8 name="diff"><br>
                             <label for="extreme_diff" class="small_size">Extreme</label>
@@ -102,7 +100,7 @@
                     </div>
                     <div class="game_footing">
                         <hr>
-                        <button type="reset" class="game_btn" onClick="window.location.reload(); action_join()">New Game</button>
+                        <button type="reset" class="game_btn" onClick="join()">Join Game</button>
                         <!--<button type="button" class="game_btn" onClick="endOfTurn()">End Turn</button>-->
                     </div>
                 </div>
@@ -110,19 +108,17 @@
                 <div class="leaderboard">
                     <h2>Leaderboards</h2>
                     <hr>
-                    <div class="result_box">
-                        <p>- theres no results registered adfsdfadfasdfsfd</p>
+                    <div id="result_box">
                     </div>
                 </div>
             </div>
 
             <div class="logs">
                 <h4>Logs</h4>
-                <div class="log_box">
+                <div id="log_box">
                     <p>lobby: Welcome to NIM!</p>
                 </div>
             </div>
         </div>
-        <script type="module" src="index.js"></script>
     </body>
 </html>
