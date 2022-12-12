@@ -24,8 +24,6 @@ var constBoard = new Array();
 var cancelClick = new Array(); 
 const baseurl = "http://twserver.alunos.dcc.fc.up.pt:8008";
 
-window.addEventListener('load', createGame)
-
 function createGame(){
     game = document.getElementsByClassName("board");
     let currentWidth = document.querySelector('#board_width');
