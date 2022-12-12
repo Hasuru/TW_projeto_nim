@@ -28,6 +28,7 @@ const server = http.createServer(function (request, response) {
                         switch (parsedUrl.pathname) {
 
                             case '/register':
+                                
                                 error = { "error": "User registered with a different password" };
                                 nick = clientmsg.nick;
                                 pass = clientmsg.pass;
@@ -54,15 +55,16 @@ const server = http.createServer(function (request, response) {
                             case '/ranking':
 
                                 response.writeHead(200, cnfg.headers.json);
-                                msg = JSON.stringify({ rank: rank });
-
+                                //lacks leaderboard connection
                                 break;
 
                             case '/join':
+
                                 //unfinished
                                 break;
 
                             default:
+
                                 response.writeHead(404, cnfg.headers.txt);
                                 msg = "command not defined";
                                 break;
