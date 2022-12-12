@@ -124,12 +124,33 @@ function ranking() {
 
 
 const http = require('http');
+const url = require('url');
+var baseURL = "http://twserver.alunos.dcc.fc.up.pt:8021";
+var parsedURL = url.parse(baseURL, true);
 
 require('./script.js'); 
 
 const server = http.createServer(function (request, response) {
-    response.writeHead(200, {'Content-Type': 'text/plain'});
-    response.end('Olá mundo\n');
+    response.writeHead(200, {headers});
+    const parsedUrl = url.parse(request.url.true);
+    let answer = {};
+    if(answer.status === undefined)
+        answer.status = 200;
+    if(answer.style === undefined)
+        answer.style = 'plain';
+    switch(request.method){
+        case 'POST':
+            const pathname = parsedURL.pathname;
+            answer = doPostRequest(pathname, request);
+            break;
+        default:
+            answer.status = 400;
+            response.end();
+    }
+    response.writeHead(answer.status, headers[answer.style]);
+    if(answer.style === 'plain')
+        response.end();
+    console.log("New POST request");
 });
 
-server.listen(8008);
+server.listen(8021);
