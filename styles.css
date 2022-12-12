@@ -124,7 +124,7 @@ ul{
     padding-top: 1%;
 }
   
-.game_column {
+.game_stack {
     position:relative;
     vertical-align:bottom;
     display:inline-block;
@@ -135,7 +135,7 @@ ul{
     width: 60px;
 }
   
-.column_piece{
+.stack_piece{
     clear: both;
     width:45px; 
     height:45px;
@@ -144,7 +144,7 @@ ul{
     background-color: rgba(51, 60, 74, 1);
 }
 
-.small_column_piece{
+.small_stack_piece{
     clear: both;
     width:25px; 
     height:25px;
