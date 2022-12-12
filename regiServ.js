@@ -1,5 +1,3 @@
-'use strict';
-
 var arRegister = [];
 module.exports.ClassReg = class Register {
     constructor(nick, pass) {

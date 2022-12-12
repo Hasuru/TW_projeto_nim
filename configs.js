@@ -1,4 +1,3 @@
-//module.exports.documentRoot = '/home/zp/public_html/about';
 module.exports.defaultIndex = 'index.html';
 module.exports.headers = {
     txt: {
